@@ -1,5 +1,3 @@
-using FluentValidation;
-
 namespace CarRental.Application.Locations.Create;
 
 public class CreateLocationValidator : AbstractValidator<CreateLocationCommand>

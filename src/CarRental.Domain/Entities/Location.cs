@@ -9,5 +9,5 @@ public class Location : EntityBase
         Name = name;
     }
 
-    public string Name { get; }
+    public string Name { get; set; }
 }

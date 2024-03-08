@@ -1,6 +1,5 @@
 using CarRental.Application.Interfaces.Stores;
 using CarRental.Domain.Entities;
-using MediatR;
 
 namespace CarRental.Application.Locations.Create;
 

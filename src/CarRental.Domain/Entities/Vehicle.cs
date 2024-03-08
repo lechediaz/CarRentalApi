@@ -4,20 +4,21 @@ namespace CarRental.Domain.Entities;
 
 public class Vehicle : EntityBase
 {
-    public Vehicle(string brand, string model, string color, decimal fare, string description, Location? location = null)
+    public Vehicle(string brand, string model, string color, decimal fare, string description, int locationId)
     {
         Brand = brand;
         Model = model;
         Color = color;
         Fare = fare;
         Description = description;
-        Location = location;
+        LocationId = locationId;
     }
 
-    public string Brand { get; }
-    public string Model { get; }
-    public string Color { get; }
-    public decimal Fare { get; }
-    public string Description { get; }
-    public Location? Location { get; }
+    public string Brand { get; set; }
+    public string Model { get; set; }
+    public string Color { get; set; }
+    public decimal Fare { get; set; }
+    public string Description { get; set; }
+    public int LocationId { get; set; }
+    public Location Location { get; set; }
 }

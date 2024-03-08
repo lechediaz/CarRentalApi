@@ -4,19 +4,22 @@ namespace CarRental.Domain.Entities;
 
 public class Rental : EntityBase
 {
-    public Rental(Vehicle vehicle, DateTime pickUpDate, DateTime returnDate, Location pickUpLocation, Location returnLocation)
+    public Rental(int vehicleId, DateTime pickUpDate, DateTime returnDate, int pickUpLocationId, int returnLocationId)
     {
-        Vehicle = vehicle;
+        VehicleId = vehicleId;
         PickUpDate = pickUpDate;
         ReturnDate = returnDate;
-        PickUpLocation = pickUpLocation;
-        ReturnLocation = returnLocation;
+        PickUpLocationId = pickUpLocationId;
+        ReturnLocationId = returnLocationId;
     }
 
-    public Vehicle Vehicle { get; }
-    public DateTime PickUpDate { get; }
-    public DateTime ReturnDate { get; }
-    public Location PickUpLocation { get; }
-    public Location ReturnLocation { get; }
+    public int VehicleId { get; set; }
+    public Vehicle Vehicle { get; set; }
+    public DateTime PickUpDate { get; set; }
+    public DateTime ReturnDate { get; set; }
+    public int PickUpLocationId { get; set; }
+    public Location PickUpLocation { get; set; }
+    public int ReturnLocationId { get; set; }
+    public Location ReturnLocation { get; set; }
     public decimal Total { get { return Vehicle.Fare; } }
 }
