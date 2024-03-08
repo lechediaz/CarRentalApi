@@ -1,6 +1,5 @@
 using CarRental.Application.Locations.Create;
 using CarRental.Application.Locations.List;
-using CarRental.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarRental.Api.Controllers;

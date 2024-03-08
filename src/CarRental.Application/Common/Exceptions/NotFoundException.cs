@@ -1,4 +1,4 @@
-namespace CarRental.Domain.Exceptions;
+namespace CarRental.Application.Common.Exceptions;
 
 public class NotFoundException : Exception
 {

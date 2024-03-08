@@ -1,5 +1,6 @@
 using CarRental.Application.Common.Interfaces;
 using CarRental.Domain.Entities.Base;
+using Microsoft.EntityFrameworkCore.DynamicLinq;
 
 namespace CarRental.Infraestructure.Persistence.Stores;
 
@@ -49,5 +50,10 @@ where TEntity : EntityBase
         _dbContext.Set<TEntity>().Update(entity);
 
         await SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<bool> ExistsByIdAsync<TId>(TId id, CancellationToken cancellationToken = default) where TId : notnull
+    {
+        return await _dbContext.Set<TEntity>().AnyAsync("Id == @0", cancellationToken, new object[] { id });
     }
 }
