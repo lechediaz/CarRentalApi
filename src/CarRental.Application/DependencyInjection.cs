@@ -1,5 +1,7 @@
 using System.Reflection;
 using CarRental.Application.Common.Behaviours;
+using CarRental.Domain.Interfaces;
+using CarRental.Domain.Services;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -14,6 +16,8 @@ public static class DependencyInjection
         });
 
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+        services.AddSingleton<IRentingService, RentingService>();
 
         return services;
     }

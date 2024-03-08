@@ -14,6 +14,8 @@ where TEntity : EntityBase
         _dbContext = dbContext;
     }
 
+    public ApplicationDbContext DbContext { get { return _dbContext; } }
+
     public async Task<TEntity> AddAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         _dbContext.Set<TEntity>().Add(entity);
