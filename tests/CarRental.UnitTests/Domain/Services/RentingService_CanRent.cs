@@ -21,14 +21,10 @@ public class RentingService_CanRent
 
     private readonly List<Rental> _rentsWithSameLocations = new()
     {
+        new(1, new DateTime(2024, 3, 1, 9, 0, 0), new DateTime(2024, 3, 3, 9, 0, 0), 2 , 1),
         new(1, new DateTime(2024, 3, 6, 10, 20, 0), new DateTime(2024, 3, 8, 14, 15, 0), 1 , 1),
-        new(1, new DateTime(2024, 3, 15, 5, 45, 0), new DateTime(2024, 3, 18, 5, 45, 0), 1 , 1),
-    };
-
-    private readonly List<Rental> _rentsWithDiferentLocations = new()
-    {
-        new(1, new DateTime(2024, 3, 6, 10, 20, 0), new DateTime(2024, 3, 8, 14, 15, 0), 1 , 2),
-        new(1, new DateTime(2024, 3, 15, 5, 45, 0), new DateTime(2024, 3, 18, 5, 45, 0), 2 , 2),
+        new(1, new DateTime(2024, 3, 15, 5, 45, 0), new DateTime(2024, 3, 18, 5, 45, 0), 1 , 2),
+        new(1, new DateTime(2024, 4, 2, 7, 45, 0), new DateTime(2024, 4, 2, 14, 45, 0), 2 , 2),
     };
 
     public RentingService_CanRent()
@@ -71,12 +67,29 @@ public class RentingService_CanRent
     }
 
     [Fact]
-    public void CannotRent_When_BetweenRentsButRentalHasDifferentPickUpLocation()
+    public void CannotRent_When_ARentalExistInSameDateRange()
     {
         var newRental = new Rental(
             1,
             new DateTime(2024, 3, 6, 10, 20, 0),
             new DateTime(2024, 3, 8, 14, 15, 0),
+            1,
+            1);
+
+        var rentingDto = new RentingDto(1, newRental, _rentsWithSameLocations);
+
+        bool canRent = _rentingService.CanRent(rentingDto);
+
+        Assert.False(canRent);
+    }
+
+    [Fact]
+    public void CannotRent_When_BetweenRentsButRentalHasDifferentPickUpLocation()
+    {
+        var newRental = new Rental(
+            1,
+            new DateTime(2024, 3, 9, 10, 20, 0),
+            new DateTime(2024, 3, 9, 14, 15, 0),
             2,
             1);
 
@@ -85,5 +98,39 @@ public class RentingService_CanRent
         bool canRent = _rentingService.CanRent(rentingDto);
 
         Assert.False(canRent);
+    }
+
+    [Fact]
+    public void CanRent_When_LastRentalLeavesVehicleInPickUpLocation()
+    {
+        var newRental = new Rental(
+            1,
+            new DateTime(2024, 4, 3, 10, 20, 0),
+            new DateTime(2024, 4, 3, 14, 15, 0),
+            2,
+            1);
+
+        var rentingDto = new RentingDto(1, newRental, _rentsWithSameLocations);
+
+        bool canRent = _rentingService.CanRent(rentingDto);
+
+        Assert.True(canRent);
+    }
+
+    [Fact]
+    public void CanRent_When_NextRentalPickUpVehicleInReturnedLocation()
+    {
+        var newRental = new Rental(
+            1,
+            new DateTime(2024, 2, 29, 10, 20, 0),
+            new DateTime(2024, 2, 29, 14, 15, 0),
+            1,
+            2);
+
+        var rentingDto = new RentingDto(1, newRental, _rentsWithSameLocations);
+
+        bool canRent = _rentingService.CanRent(rentingDto);
+
+        Assert.True(canRent);
     }
 }
